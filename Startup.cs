@@ -57,6 +57,8 @@ namespace MimicApi
             {
                 endpoints.MapControllers();
             });
+
+            app.UseStatusCodePages();
         }
     }
 }
