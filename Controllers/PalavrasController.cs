@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MimicApi.Database;
+using MimicApi.Helpers;
 using MimicApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace MimicApi.Controllers
         //App -- /api/palavras?data=2021-03-03
         [Route("")]
         [HttpGet]
-        public ActionResult ObterTodas(DateTime? data, int? paginaNumero, int? qtdItens)
+        public ActionResult ObterTodas(DateTime? data, int? paginaNumero, int? pagRegistro)
         {
             var item = _banco.Palavras.AsQueryable();
             if (data.HasValue)
@@ -31,12 +33,28 @@ namespace MimicApi.Controllers
 
             if (paginaNumero.HasValue)
             {
+                var quatidadeTotalRegistro = item.Count();
+                
                 //Lógica de paginação
-                item = item.Skip((paginaNumero.Value - 1) * qtdItens.Value).Take(qtdItens.Value);
+                item = item.Skip((paginaNumero.Value - 1) * pagRegistro.Value).Take(pagRegistro.Value);
+                
+                
+                var paginacao = new Paginacao();
+                paginacao.NumeroPagina = paginaNumero.Value;
+                paginacao.RegistroPorPagina = pagRegistro.Value;
+                paginacao.TotalRegistro = quatidadeTotalRegistro;
+                paginacao.TotalPaginas = (int)Math.Ceiling((double)quatidadeTotalRegistro / pagRegistro.Value);
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginacao));
+                if(paginaNumero > paginacao.TotalPaginas)
+                {
+                    return NotFound();
+                }
             }
 
             return Ok(item);
         }
+
 
         //Web -- /api/palavras/1
         [Route("{id}")]
