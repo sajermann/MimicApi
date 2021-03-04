@@ -12,6 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MimicApi.Repositories;
+using MimicApi.Repositories.Contracts;
+using AutoMapper;
+using MimicApi.Helpers;
 
 namespace MimicApi
 {
@@ -27,6 +31,14 @@ namespace MimicApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //AutoMapperConfiguração
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new DTOMapperProfile());
+            });
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+
 
             services.AddDbContext<MimicContext>(opt =>
             {
@@ -37,6 +49,7 @@ namespace MimicApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MimicApi", Version = "v1" });
             });
+            services.AddScoped<IPalavraRepository, PalavraRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
