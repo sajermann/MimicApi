@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MimicApi.Models;
+using MimicApi.V1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MimicApi.Database
+namespace MimicApi.V1.Database
 {
     public class MimicContext : DbContext
     {

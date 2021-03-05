@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MimicApi.Database;
+using MimicApi.V1.Database;
 using MimicApi.Helpers;
-using MimicApi.Models;
-using MimicApi.Repositories.Contracts;
+using MimicApi.V1.Models;
+using MimicApi.V1.Repositories.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MimicApi.Repositories
+namespace MimicApi.V1.Repositories
 {
     public class PalavraRepository : IPalavraRepository
     {

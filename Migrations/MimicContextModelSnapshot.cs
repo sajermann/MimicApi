@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MimicApi.Database;
+using MimicApi.V1.Database;
 
 namespace MimicApi.Migrations
 {
