@@ -26,7 +26,11 @@ namespace MimicApi.V1.Controllers
             _mapper = mapper;
         }
 
-        
+        /// <summary>
+        /// Operação que pega do banco de dados todas as palavras existentes
+        /// </summary>
+        /// <param name="palavraUrlQuery">Filtros de pesquisa</param>
+        /// <returns>Listagem de palavras</returns>
         [MapToApiVersion("1.0")]
         [MapToApiVersion("1.1")]
         //App -- /api/palavras?data=2021-03-03
